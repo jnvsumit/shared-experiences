@@ -36,6 +36,8 @@ services:
       - ./.env
     environment:
       - NODE_ENV=production
+      - MONGO_URI=${MONGO_URI:-mongodb://mongo:27017/shared_experiences}
+      - FRONTEND_ORIGIN=${FRONTEND_ORIGIN:-http://localhost:5173}
     ports:
       - "4000:4000"
     depends_on:
