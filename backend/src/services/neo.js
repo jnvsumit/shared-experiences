@@ -1,7 +1,9 @@
 import neo4j from 'neo4j-driver'
 import { NEO4J_URI, NEO4J_USER, NEO4J_PASSWORD } from '../config/env.js'
 
-export const neoDriver = (NEO4J_URI && NEO4J_USER && NEO4J_PASSWORD)
+const NEO4J_ENABLED = String(process.env.NEO4J_ENABLE || '').toLowerCase() === 'true'
+
+export const neoDriver = (NEO4J_ENABLED && NEO4J_URI && NEO4J_USER && NEO4J_PASSWORD)
   ? neo4j.driver(NEO4J_URI, neo4j.auth.basic(NEO4J_USER, NEO4J_PASSWORD))
   : null
 
