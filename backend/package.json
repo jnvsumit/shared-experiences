@@ -1,0 +1,28 @@
+{
+  "name": "shared-experiences-backend",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node src/index.js",
+    "dev": "nodemon src/index.js"
+  },
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "express-rate-limit": "^7.3.1",
+    "cookie-parser": "^1.4.6",
+    "mongoose": "^8.5.1",
+    "morgan": "^1.10.0",
+    "openai": "^4.56.0",
+    "sentiment": "^5.0.2",
+    "skmeans": "^0.11.3",
+    "neo4j-driver": "^5.24.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.4"
+  }
+}
+
+

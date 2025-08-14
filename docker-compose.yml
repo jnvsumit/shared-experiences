@@ -1,0 +1,62 @@
+version: '3.8'
+services:
+  mongo:
+    image: mongo:6
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.runCommand({ ping: 1 }).ok" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  neo4j:
+    image: neo4j:5
+    restart: unless-stopped
+    ports:
+      - "7474:7474"   # HTTP UI
+      - "7687:7687"   # Bolt
+    environment:
+      - NEO4J_AUTH=neo4j/neo4jpassword
+      - NEO4J_server_memory_heap_initial__size=512m
+      - NEO4J_server_memory_heap_max__size=1g
+      - NEO4J_server_memory_pagecache_size=512m
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+      - neo4j_plugins:/plugins
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:7474"]
+      interval: 15s
+      timeout: 5s
+      retries: 10
+  backend:
+    build: ./backend
+    env_file:
+      - ./.env
+    environment:
+      - NODE_ENV=production
+    ports:
+      - "4000:4000"
+    depends_on:
+      mongo:
+        condition: service_healthy
+      neo4j:
+        condition: service_started
+  frontend:
+    build: ./frontend
+    environment:
+      - VITE_API_BASE=${FRONTEND_VITE_API_BASE:-http://localhost:4000}
+    ports:
+      - "5173:80"
+    depends_on:
+      - backend
+volumes:
+  mongo_data:
+  neo4j_data:
+  neo4j_logs:
+  neo4j_plugins:
+
+
