@@ -54,6 +54,15 @@ services:
       - "5173:80"
     depends_on:
       - backend
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./default.conf:/etc/nginx/conf.d/default.conf:ro
+    depends_on:
+      - frontend
+      - backend
 volumes:
   mongo_data:
   neo4j_data:
