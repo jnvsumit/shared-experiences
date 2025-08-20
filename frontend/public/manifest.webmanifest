@@ -1,7 +1,7 @@
 {
   "name": "Shared Experiences",
   "short_name": "Experiences",
-  "start_url": "/",
+  "start_url": "https://aeternyug.com/",
   "display": "standalone",
   "theme_color": "#0f1320",
   "background_color": "#0f1320",
